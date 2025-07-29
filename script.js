@@ -31,8 +31,9 @@ function start() {
   words = text.trim().split(/\s+/);
   index = 0;
 
-  const speed = parseInt(document.getElementById("speedInput").value);
-
+  const wpm = parseInt(document.getElementById("wpmInput").value);
+  const speed = 60000 / wpm;
+  
   if (interval) clearInterval(interval);
 
   interval = setInterval(() => {
