@@ -9,8 +9,9 @@ document.getElementById("pdfUpload").addEventListener("change", async function (
 
   const reader = new FileReader();
   reader.onload = async function () {
-    const typedarray = new Uint8Array(this.result);
+  const typedarray = new Uint8Array(this.result);
 
+  try {
     const pdf = await pdfjsLib.getDocument(typedarray).promise;
     let fullText = "";
 
@@ -20,6 +21,17 @@ document.getElementById("pdfUpload").addEventListener("change", async function (
       const pageText = textContent.items.map(item => item.str).join(" ");
       fullText += pageText + " ";
     }
+
+    // Clean up weird spacing
+    fullText = fullText.replace(/\s+/g, ' ').trim();
+
+    document.getElementById("textInput").value = fullText;
+  } catch (err) {
+    alert("Could not parse PDF. Try a different file.");
+    console.error(err);
+  }
+};
+
 
     document.getElementById("textInput").value = fullText.trim();
   };
