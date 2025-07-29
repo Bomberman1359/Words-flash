@@ -50,4 +50,21 @@ function pause() {
   if (interval) clearInterval(interval);
 }
 
+function resume() {
+  const wpm = parseInt(document.getElementById("wpmInput").value);
+  const speed = 60000 / wpm;
+
+  if (interval) clearInterval(interval);
+
+  interval = setInterval(() => {
+    if (index < words.length) {
+      document.getElementById("wordDisplay").innerText = words[index];
+      index++;
+    } else {
+      clearInterval(interval);
+    }
+  }, speed);
+}
+
+
 
