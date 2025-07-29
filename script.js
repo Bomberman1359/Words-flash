@@ -45,7 +45,7 @@ function start() {
 
   const wpm = parseInt(document.getElementById("wpmInput").value);
   const speed = 60000 / wpm;
-  
+
   if (interval) clearInterval(interval);
 
   interval = setInterval(() => {
@@ -57,6 +57,7 @@ function start() {
     }
   }, speed);
 }
+
 
 function pause() {
   if (interval) clearInterval(interval);
