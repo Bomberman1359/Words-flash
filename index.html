@@ -1,1 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>One Word Reader</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>📖 One Word Kindle</h1>
+
+  <textarea id="textInput" placeholder="Paste your text here..."></textarea>
+  <div class="controls">
+    <label for="speedInput">Speed (ms per word):</label>
+    <input type="number" id="speedInput" value="300" min="50" max="2000" />
+    <button onclick="start()">Start</button>
+    <button onclick="pause()">Pause</button>
+  </div>
+
+  <div id="wordDisplay">Your word will appear here</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
 
