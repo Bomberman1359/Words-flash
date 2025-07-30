@@ -7,9 +7,35 @@ window.onload = function () {
 
   // PDF upload handler
   document.getElementById("pdfUpload").addEventListener("change", async function () {
-    // ...
+    const file = this.files[0];
+    if (!file || file.type !== "application/pdf") return;
+
+    const reader = new FileReader();
+    reader.onload = async function () {
+      const typedarray = new Uint8Array(this.result);
+
+      try {
+        const pdf = await pdfjsLib.getDocument(typedarray).promise;
+        let fullText = "";
+
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const textContent = await page.getTextContent();
+          const pageText = textContent.items.map(item => item.str).join(" ");
+          fullText += pageText + " ";
+        }
+
+        fullText = fullText.replace(/\s+/g, ' ').trim();
+        document.getElementById("textInput").value = fullText;
+      } catch (err) {
+        alert("Could not parse PDF. Try a different file.");
+        console.error(err);
+      }
+    };
+    reader.readAsArrayBuffer(file);
   });
 
+  // START
   window.start = function () {
     const text = document.getElementById("textInput").value;
     words = text.trim().split(/\s+/);
@@ -17,7 +43,7 @@ window.onload = function () {
 
     const wpm = parseInt(document.getElementById("wpmInput").value);
     const speed = 60000 / wpm;
-    
+
     document.getElementById("progressBar").style.width = "0%";
     document.getElementById("progressText").innerText = `0 / ${words.length} (0%)`;
 
@@ -38,11 +64,12 @@ window.onload = function () {
     }, speed);
   };
 
-
+  // PAUSE
   window.pause = function () {
     if (interval) clearInterval(interval);
   };
 
+  // RESUME
   window.resume = function () {
     const wpm = parseInt(document.getElementById("wpmInput").value);
     const speed = 60000 / wpm;
@@ -63,6 +90,8 @@ window.onload = function () {
       }
     }, speed);
   };
+};
+
 
 
 
