@@ -36,6 +36,7 @@ window.onload = function () {
         clearInterval(interval);
       }
     }, speed);
+  };
 
 
   window.pause = function () {
@@ -61,6 +62,7 @@ window.onload = function () {
         clearInterval(interval);
       }
     }, speed);
+  };
 
 
 
