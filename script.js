@@ -106,6 +106,35 @@ window.onload = function () {
       }
     }, speed);
   };
+  
+  document.getElementById("wpmInput").addEventListener("input", function () {
+    if (interval) {
+      const wpm = parseInt(this.value);
+      const speed = 60000 / wpm;
+
+      clearInterval(interval);
+
+      interval = setInterval(() => {
+        if (index < words.length) {
+          document.getElementById("wordDisplay").innerText = words[index];
+
+          const progressPercent = Math.floor((index / words.length) * 100);
+          document.getElementById("progressBar").style.width = progressPercent + "%";
+          document.getElementById("progressText").innerText = `${index + 1} / ${words.length} (${progressPercent}%)`;
+
+          const timeRemaining = Math.round((words.length - index - 1) * (speed / 1000));
+          const minutes = Math.floor(timeRemaining / 60);
+          const seconds = timeRemaining % 60;
+          document.getElementById("timeLeft").innerText = `Estimated time left: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+          index++;
+        } else {
+          clearInterval(interval);
+          document.getElementById("timeLeft").innerText = `Estimated time left: 0:00`;
+        }
+      }, speed);
+    }
+  });
 };
 
 
