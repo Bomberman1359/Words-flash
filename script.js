@@ -57,6 +57,11 @@ window.onload = function () {
         document.getElementById("progressBar").style.width = progressPercent + "%";
         document.getElementById("progressText").innerText = `${index + 1} / ${words.length} (${progressPercent}%)`;
 
+        const timeRemaining = Math.round((words.length - index - 1) * (speed / 1000));
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        document.getElementById("timeLeft").innerText = `Estimated time left: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+
         index++;
       } else {
         clearInterval(interval);
