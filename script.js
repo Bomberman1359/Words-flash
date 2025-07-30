@@ -17,18 +17,26 @@ window.onload = function () {
 
     const wpm = parseInt(document.getElementById("wpmInput").value);
     const speed = 60000 / wpm;
+    
+    document.getElementById("progressBar").style.width = "0%";
+    document.getElementById("progressText").innerText = `0 / ${words.length} (0%)`;
 
     if (interval) clearInterval(interval);
 
     interval = setInterval(() => {
       if (index < words.length) {
         document.getElementById("wordDisplay").innerText = words[index];
+
+        const progressPercent = Math.floor((index / words.length) * 100);
+        document.getElementById("progressBar").style.width = progressPercent + "%";
+        document.getElementById("progressText").innerText = `${index + 1} / ${words.length} (${progressPercent}%)`;
+
         index++;
       } else {
         clearInterval(interval);
       }
     }, speed);
-  };
+
 
   window.pause = function () {
     if (interval) clearInterval(interval);
@@ -43,13 +51,16 @@ window.onload = function () {
     interval = setInterval(() => {
       if (index < words.length) {
         document.getElementById("wordDisplay").innerText = words[index];
+
+        const progressPercent = Math.floor((index / words.length) * 100);
+        document.getElementById("progressBar").style.width = progressPercent + "%";
+        document.getElementById("progressText").innerText = `${index + 1} / ${words.length} (${progressPercent}%)`;
+
         index++;
       } else {
         clearInterval(interval);
       }
     }, speed);
-  };
-};
 
 
 
