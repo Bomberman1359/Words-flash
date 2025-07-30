@@ -41,3 +41,26 @@ input[type="file"] {
   margin: 1rem 0;
 }
 
+#progressBarContainer {
+  width: 80%;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+#progressBar {
+  height: 100%;
+  width: 0%;
+  background-color: #4caf50;
+  transition: width 0.2s ease-in-out;
+}
+
+#progressText {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+
