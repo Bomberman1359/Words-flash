@@ -56,6 +56,7 @@ window.onload = function () {
         const progressPercent = Math.floor((index / words.length) * 100);
         document.getElementById("progressBar").style.width = progressPercent + "%";
         document.getElementById("progressText").innerText = `${index + 1} / ${words.length} (${progressPercent}%)`;
+        document.getElementById("timeLeft").innerText = `Estimated time left: 0:00`;
 
         const timeRemaining = Math.round((words.length - index - 1) * (speed / 1000));
         const minutes = Math.floor(timeRemaining / 60);
