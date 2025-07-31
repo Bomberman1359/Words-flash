@@ -9,6 +9,15 @@
 <body>
   <h1>📖 One Word Kindle</h1>
 
+  <div id="wordDisplay">Your word will appear here</div>
+
+  <div id="progressBarContainer">
+    <div id="progressBar"></div>
+  </div>
+  <div id="progressText">0 / 0 (0%)</div>
+
+  <div id="timeLeft">Estimated time left: 0:00</div>
+  
   <textarea id="textInput" placeholder="Paste your text here..."></textarea>
   <input type="file" id="pdfUpload" accept="application/pdf" />
 
@@ -19,17 +28,6 @@
     <button onclick="pause()">Pause</button>
     <button onclick="resume()">Resume</button>
   </div>
-
-  <div id="wordDisplay">Your word will appear here</div>
-
-  <div id="progressBarContainer">
-    <div id="progressBar"></div>
-  </div>
-  <div id="progressText">0 / 0 (0%)</div>
-
-  <div id="timeLeft">Estimated time left: 0:00</div>
-
-  
 
   <h2>📚 Reading History</h2>
   <div id="historyList">No history yet.</div>
