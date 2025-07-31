@@ -33,44 +33,16 @@ window.onload = function () {
       }
     };
     reader.readAsArrayBuffer(file);
-
-    function renderHistory() {
-      const historyContainer = document.getElementById("historyList");
-      historyContainer.innerHTML = "";
-
-      const keys = Object.keys(localStorage).filter(key => key.startsWith("reading_"));
-      if (keys.length === 0) {
-        historyContainer.innerText = "No history yet.";
-        return;
-    }
-
-    keys.sort().reverse(); // show newest first
-
-    keys.forEach(key => {
-      const item = JSON.parse(localStorage.getItem(key));
-      const percent = Math.floor((item.index / item.total) * 100);
-
-      const div = document.createElement("div");
-      div.className = "history-item";
-      div.innerText = `${item.title} — ${percent}% read`;
-
-      div.addEventListener("click", () => loadReadingFromHistory(item));
-
-      historyContainer.appendChild(div);
-    });
-  }
-    renderHistory();
-});
+  });
 
   // START
   window.start = function () {
     const text = document.getElementById("textInput").value;
     words = text.trim().split(/\s+/);
     index = 0;
-    
+
     const title = prompt("Enter a name for this reading (e.g., 'Ch. 1 Notes', or 'Physics Book')") || "Untitled";
 
-    // Save to localStorage
     const id = Date.now().toString();
     localStorage.setItem("reading_" + id, JSON.stringify({
       id,
@@ -80,7 +52,6 @@ window.onload = function () {
       total: words.length
     }));
 
-    // Refresh history display
     renderHistory();
 
     const wpm = parseInt(document.getElementById("wpmInput").value);
@@ -98,7 +69,6 @@ window.onload = function () {
         const progressPercent = Math.floor((index / words.length) * 100);
         document.getElementById("progressBar").style.width = progressPercent + "%";
         document.getElementById("progressText").innerText = `${index + 1} / ${words.length} (${progressPercent}%)`;
-        document.getElementById("timeLeft").innerText = `Estimated time left: 0:00`;
 
         const timeRemaining = Math.round((words.length - index - 1) * (speed / 1000));
         const minutes = Math.floor(timeRemaining / 60);
@@ -108,6 +78,7 @@ window.onload = function () {
         index++;
       } else {
         clearInterval(interval);
+        document.getElementById("timeLeft").innerText = `Estimated time left: 0:00`;
       }
     }, speed);
   };
@@ -123,11 +94,6 @@ window.onload = function () {
     const speed = 60000 / wpm;
 
     if (interval) clearInterval(interval);
-
-    const timeRemaining = Math.round((words.length - index - 1) * (speed / 1000));
-    const minutes = Math.floor(timeRemaining / 60);
-    const seconds = timeRemaining % 60;
-    document.getElementById("timeLeft").innerText = `Estimated time left: ${minutes}:${seconds.toString().padStart(2, '0')}`;
 
     interval = setInterval(() => {
       if (index < words.length) {
@@ -145,10 +111,12 @@ window.onload = function () {
         index++;
       } else {
         clearInterval(interval);
+        document.getElementById("timeLeft").innerText = `Estimated time left: 0:00`;
       }
     }, speed);
   };
 
+  // LOAD FROM HISTORY
   function loadReadingFromHistory(item) {
     document.getElementById("textInput").value = item.content;
     words = item.content.split(/\s+/);
@@ -177,13 +145,14 @@ window.onload = function () {
         index++;
         item.index = index;
         localStorage.setItem("reading_" + item.id, JSON.stringify(item));
-    } else {
-      clearInterval(interval);
-      document.getElementById("timeLeft").innerText = `Estimated time left: 0:00`;
-    }
-  }, speed);
-}
+      } else {
+        clearInterval(interval);
+        document.getElementById("timeLeft").innerText = `Estimated time left: 0:00`;
+      }
+    }, speed);
+  }
 
+  // LIVE SPEED UPDATE
   document.getElementById("wpmInput").addEventListener("input", function () {
     if (interval) {
       const wpm = parseInt(this.value);
@@ -212,6 +181,38 @@ window.onload = function () {
       }, speed);
     }
   });
+
+  // RENDER HISTORY
+  function renderHistory() {
+    const historyContainer = document.getElementById("historyList");
+    if (!historyContainer) return;
+
+    historyContainer.innerHTML = "";
+
+    const keys = Object.keys(localStorage).filter(key => key.startsWith("reading_"));
+    if (keys.length === 0) {
+      historyContainer.innerText = "No history yet.";
+      return;
+    }
+
+    keys.sort().reverse();
+
+    keys.forEach(key => {
+      const item = JSON.parse(localStorage.getItem(key));
+      const percent = Math.floor((item.index / item.total) * 100);
+
+      const div = document.createElement("div");
+      div.className = "history-item";
+      div.innerText = `${item.title} — ${percent}% read`;
+
+      div.addEventListener("click", () => loadReadingFromHistory(item));
+
+      historyContainer.appendChild(div);
+    });
+  }
+
+  // Call on page load
+  renderHistory();
 };
 
 
