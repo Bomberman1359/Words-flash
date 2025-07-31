@@ -33,13 +33,55 @@ window.onload = function () {
       }
     };
     reader.readAsArrayBuffer(file);
-  });
+
+    function renderHistory() {
+      const historyContainer = document.getElementById("historyList");
+      historyContainer.innerHTML = "";
+
+      const keys = Object.keys(localStorage).filter(key => key.startsWith("reading_"));
+      if (keys.length === 0) {
+        historyContainer.innerText = "No history yet.";
+        return;
+    }
+
+    keys.sort().reverse(); // show newest first
+
+    keys.forEach(key => {
+      const item = JSON.parse(localStorage.getItem(key));
+      const percent = Math.floor((item.index / item.total) * 100);
+
+      const div = document.createElement("div");
+      div.className = "history-item";
+      div.innerText = `${item.title} — ${percent}% read`;
+
+      div.addEventListener("click", () => loadReadingFromHistory(item));
+
+      historyContainer.appendChild(div);
+    });
+  }
+    renderHistory();
+});
 
   // START
   window.start = function () {
     const text = document.getElementById("textInput").value;
     words = text.trim().split(/\s+/);
     index = 0;
+    
+    const title = prompt("Enter a name for this reading (e.g., 'Ch. 1 Notes', or 'Physics Book')") || "Untitled";
+
+    // Save to localStorage
+    const id = Date.now().toString();
+    localStorage.setItem("reading_" + id, JSON.stringify({
+      id,
+      title,
+      content: text.trim(),
+      index: 0,
+      total: words.length
+    }));
+
+    // Refresh history display
+    renderHistory();
 
     const wpm = parseInt(document.getElementById("wpmInput").value);
     const speed = 60000 / wpm;
@@ -106,7 +148,42 @@ window.onload = function () {
       }
     }, speed);
   };
-  
+
+  function loadReadingFromHistory(item) {
+    document.getElementById("textInput").value = item.content;
+    words = item.content.split(/\s+/);
+    index = item.index || 0;
+
+    document.getElementById("wordDisplay").innerText = words[index] || "";
+
+    const wpm = parseInt(document.getElementById("wpmInput").value);
+    const speed = 60000 / wpm;
+
+    if (interval) clearInterval(interval);
+
+    interval = setInterval(() => {
+      if (index < words.length) {
+        document.getElementById("wordDisplay").innerText = words[index];
+
+        const progressPercent = Math.floor((index / words.length) * 100);
+        document.getElementById("progressBar").style.width = progressPercent + "%";
+        document.getElementById("progressText").innerText = `${index + 1} / ${words.length} (${progressPercent}%)`;
+
+        const timeRemaining = Math.round((words.length - index - 1) * (speed / 1000));
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        document.getElementById("timeLeft").innerText = `Estimated time left: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+        index++;
+        item.index = index;
+        localStorage.setItem("reading_" + item.id, JSON.stringify(item));
+    } else {
+      clearInterval(interval);
+      document.getElementById("timeLeft").innerText = `Estimated time left: 0:00`;
+    }
+  }, speed);
+}
+
   document.getElementById("wpmInput").addEventListener("input", function () {
     if (interval) {
       const wpm = parseInt(this.value);
