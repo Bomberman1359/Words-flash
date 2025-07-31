@@ -18,16 +18,16 @@
     <div id="timeLeft">Estimated time left: 0:00</div>
   </div>
 
-  <div class="controls">
+  <textarea id="textInput" placeholder="Paste your text here..."></textarea>
+  <input type="file" id="pdfUpload" accept="application/pdf" />
+
+   <div class="controls">
     <label for="wpmInput">Speed (words per minute):</label>
     <input type="number" id="wpmInput" value="200" min="10" max="2000" />
     <button onclick="start()">Start</button>
     <button onclick="pause()">Pause</button>
     <button onclick="resume()">Resume</button>
   </div>
-
-  <textarea id="textInput" placeholder="Paste your text here..."></textarea>
-  <input type="file" id="pdfUpload" accept="application/pdf" />
 
   <h2>📚 Reading History</h2>
   <div id="historyList">No history yet.</div>
