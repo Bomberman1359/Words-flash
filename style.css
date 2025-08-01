@@ -70,9 +70,14 @@ input[type="file"] {
 }
 
 
-#historyHeader {
+#historyList {
+  margin-top: 20px;
+}
+
+#readingHistoryTitle {
   margin-top: 50px; 
 }
+
 
 #historyList {
   margin-top: 1rem;
