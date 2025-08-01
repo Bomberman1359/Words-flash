@@ -165,4 +165,14 @@ window.onload = function () {
 
   // Initial history render
   renderHistory();
+  
+  document.getElementById("clearHistoryBtn").addEventListener("click", function () {
+    const confirmDelete = confirm("Are you sure you want to clear all reading history?");
+    if (!confirmDelete) return;
+
+    const keys = Object.keys(localStorage).filter(key => key.startsWith("reading_"));
+    keys.forEach(key => localStorage.removeItem(key));
+    renderHistory();
+});
+
 };
