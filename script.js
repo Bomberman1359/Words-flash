@@ -173,6 +173,5 @@ window.onload = function () {
     const keys = Object.keys(localStorage).filter(key => key.startsWith("reading_"));
     keys.forEach(key => localStorage.removeItem(key));
     renderHistory();
-});
-
+  });
 };
