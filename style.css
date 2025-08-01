@@ -146,6 +146,10 @@ input[type="file"] {
   background-color: #b52a38;
 }
 
+.history-item-inner button {
+  margin-left: 10px;
+}
+
 .history-item {
   width: 100%;
   padding: 10px 15px;
@@ -161,6 +165,7 @@ input[type="file"] {
   align-items: center;
   width: 100%;
 }
+
 
 
 
