@@ -192,4 +192,5 @@ window.onload = function () {
     keys.forEach(key => localStorage.removeItem(key));
     renderHistory();
   });
+  
 };
