@@ -49,7 +49,9 @@ window.onload = function () {
       });
 
       const container = document.createElement("div");
+      
       container.className = "history-item-inner";
+      
       container.style.display = "flex";
       container.style.justifyContent = "space-between";
       container.style.alignItems = "center";
