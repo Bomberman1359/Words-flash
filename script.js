@@ -21,7 +21,7 @@ window.onload = function () {
       return;
     }
 
-    keys.sort().reverse();
+    keys.sort().reverse(); // newest first
 
     keys.forEach((key) => {
       const item = JSON.parse(localStorage.getItem(key));
@@ -29,13 +29,31 @@ window.onload = function () {
 
       const div = document.createElement("div");
       div.className = "history-item";
-      div.innerText = `${item.title} — ${percent}% read`;
 
-      div.addEventListener("click", () => loadReadingFromHistory(item));
+    const titleSpan = document.createElement("span");
+      titleSpan.innerText = `${item.title} — ${percent}% read`;
+      titleSpan.style.cursor = "pointer";
+      titleSpan.addEventListener("click", () => loadReadingFromHistory(item));
 
+      const deleteBtn = document.createElement("button");
+      deleteBtn.innerText = "🗑️";
+      deleteBtn.className = "delete-btn";
+      deleteBtn.title = "Delete this entry";
+      deleteBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // prevents triggering the load function
+        const confirmDelete = confirm(`Delete "${item.title}" from history?`);
+        if (confirmDelete) {
+          localStorage.removeItem(key);
+          renderHistory();
+        }
+      });
+
+      div.appendChild(titleSpan);
+      div.appendChild(deleteBtn);
       historyContainer.appendChild(div);
     });
   }
+
 
   // === PDF Upload Handler ===
   document
