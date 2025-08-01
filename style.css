@@ -95,3 +95,18 @@ input[type="file"] {
   background-color: #e0e0e0;
 }
 
+#clearHistoryBtn {
+  margin-top: 10px;
+  padding: 6px 12px;
+  border: none;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#clearHistoryBtn:hover {
+  background-color: #b52a38;
+}
+
+
