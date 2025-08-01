@@ -1,4 +1,5 @@
 # Words-flash
+**Link to the website:** https://bomberman1359.github.io/Words-flash/
 ## Description: 
 Words-flash, aka, One Word Kindle, is a speed reading web app that helps people read faster by flashing one word at a time on the screen. You can paste in your own text, upload a PDF, or resume where you left off from something you were reading before. The idea is based on the concept of RSVP (Rapid Serial Visual Presentation), where instead of reading full paragraphs, the reader focuses on one word at a time to avoid moving their eyes around the page. 
 
