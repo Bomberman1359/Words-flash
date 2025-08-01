@@ -48,7 +48,9 @@ Another big decision was whether to auto-save the progress or not. While figurin
 
 I also added a button to delete single history items, and one to clear all. I made the individual delete icon a trash can emoji, because it looks friendlier and works well with the rest of the app's simple design.
 
-The styling was also something I went back and forth on. I didn’t want to make it too fancy, but I still wanted it to look clean. I tried to follow spacing and color choices that made things easy to read without being too dull.
+The styling was also something I went back and forth on. I didn’t want to make it too fancy, but I still wanted it to look clean. I tried to follow spacing and color choices that made things easy to read without being too dull. 
+
+Note: The layout is meant to work on computers, it may be messed up on mobile devices.
 
 ## Final Thoughts
 If I had more time and coding knowledge, I’d probably add themes (like dark mode), an algorithm to filter out only the important texts (keeping the main texts while removing page numbers, copyright info, etc.), an improved PDF formatting, and perhaps a way to skip to a certain section of the text. But even in its current state, I think it is a full, complex enough project with useful features. I’m proud of how I stuck with it through the design challenges and all the tiny layout issues that came up. 
